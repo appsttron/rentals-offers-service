@@ -9,7 +9,7 @@ import { HttpModule } from '@nestjs/axios';
 
 @Module({
   imports: [DatabaseModule, HttpModule],
-  controllers: [RentalEntitiesController],
+  controllers: [RentalEntitiesController, ],
   providers: [
     RentalEntitiesService,
     RentalEntitiesDtoMapper,

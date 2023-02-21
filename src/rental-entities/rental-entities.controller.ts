@@ -28,9 +28,9 @@ export class RentalEntitiesController {
     return this.rentalEntityService.create(createRentalEntityDto);
   }
 
-  @Get(':name')
-  async findByName(@Param('name') name: string): Promise<RentalEntityDocument> {
-    return this.rentalEntityService.findByName(name);
+  @Get(':permit')
+  async findByName(@Param('permit') permit: string): Promise<RentalEntityDocument> {
+    return this.rentalEntityService.findByPermit(permit);
   }
 
   @Get()
@@ -47,6 +47,6 @@ export class RentalEntitiesController {
   async updateValue(
     @Body() updateRentalEntityStatusDto: UpdateRentalEntityStatusDto
   ): Promise<RentalEntityDocument> {
-    return this.rentalEntityService.updateValue(updateRentalEntityStatusDto);
+    return this.rentalEntityService.updateStatus(updateRentalEntityStatusDto);
   }
 }

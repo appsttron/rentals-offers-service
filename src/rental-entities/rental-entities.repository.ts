@@ -3,7 +3,7 @@ import { RentalEntity, RentalEntityDocument } from './rental-entities.schema';
 export interface RentalEntitiesRepository {
   create(newConfig: RentalEntity): Promise<RentalEntityDocument>;
 
-  findByName(name: string): Promise<RentalEntityDocument>;
+  findByPermit(permit: string): Promise<RentalEntityDocument>;
 
   findAll(): Promise<RentalEntityDocument[]>;
 

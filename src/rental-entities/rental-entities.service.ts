@@ -18,10 +18,17 @@ export class RentalEntitiesService {
   async read(): Promise<any> {
     return new Promise( resolve =>
       this.httpService
-          .get('https://data.nashville.gov/resource/2z82-v8pm.json').subscribe(r => {
-            // r.data.map(record => {
-            //   this.create(record);
-            // })
+          .get('https://data.nashville.gov/resource/2z82-v8pm.json').subscribe(async r => {
+            // await r.data.map(async (record:CreateRentalEntityDto) => {
+            //   let existing = await this.findByPermit(record.permit);
+            //   if(existing){
+            //     if(existing.permit_status !== record.permit_status){
+            //       await this.updateStatus({permit: record.permit, status: record.permit_status});
+            //     }
+            //   } else{
+            //     await this.create(record);
+            //   }
+            // });
             resolve(r.data);
       })
     );
@@ -35,8 +42,8 @@ export class RentalEntitiesService {
     );
   }
 
-  async findByName(name: string): Promise<RentalEntityDocument> {
-    return this.rentalEntitiesRepository.findByName(name);
+  async findByPermit(permit: string): Promise<RentalEntityDocument> {
+    return this.rentalEntitiesRepository.findByPermit(permit);
   }
 
   async findAll(): Promise<RentalEntityDocument[]> {
@@ -47,7 +54,7 @@ export class RentalEntitiesService {
     return this.rentalEntitiesRepository.delete(name);
   }
 
-  async updateValue(
+  async updateStatus(
     updateConfigValueDto: UpdateRentalEntityStatusDto
   ): Promise<RentalEntityDocument> {
     return this.rentalEntitiesRepository

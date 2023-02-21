@@ -8,6 +8,6 @@ export class SecurityMiddleware implements NestMiddleware {
   constructor(private readonly config: EnvironmentConfigService) {}
   use(req: Request, res: Response, next: NextFunction) {
     if(req.url.includes('mock')) next();
-    validateApiKey(req.headers['api_key'], this.config.getApiKey(), next);
+    else validateApiKey(req.headers['api_key'], this.config.getApiKey(), next);
   }
 }

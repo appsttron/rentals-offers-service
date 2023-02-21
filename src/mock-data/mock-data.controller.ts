@@ -6,7 +6,7 @@ import PostData from './post-data';
 import PreData from './pre-data';
 
 @Controller('mock-data')
-export class RentalEntitiesController {
+export class MockDataController {
     constructor() {}
 
     @Get('/pre')

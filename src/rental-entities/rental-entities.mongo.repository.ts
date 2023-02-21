@@ -14,8 +14,8 @@ export class RentalEntitiesMongoRepository implements RentalEntitiesRepository {
     return this.rentalEntityDocumentModel.create(newRentalEntity);
   }
 
-  async findByName(name: string): Promise<RentalEntityDocument> {
-    return this.rentalEntityDocumentModel.findOne({ name: name }).exec();
+  async findByPermit(permit: string): Promise<RentalEntityDocument> {
+    return this.rentalEntityDocumentModel.findOne({ permit: permit }).exec();
   }
 
   async findAll(): Promise<RentalEntityDocument[]> {
