@@ -1,0 +1,59 @@
+name: Build & Deploy
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: read
+      packages: read
+
+    name: "Deploy Service"
+    steps:
+      - name: Configure SSH
+        run: |
+          mkdir -p ~/.ssh/
+          echo "$SSH_KEY" > ~/.ssh/staging.key
+          chmod 600 ~/.ssh/staging.key
+          cat >>~/.ssh/config <<END
+          Host staging
+            HostName $SSH_HOST
+            User $SSH_USER
+            IdentityFile ~/.ssh/staging.key
+            StrictHostKeyChecking no
+          END
+        env:
+          SSH_USER: ${{ secrets.SSH_USERNAME }}
+          SSH_KEY: ${{ secrets.SSH_KEY }}
+          SSH_HOST: ${{ secrets.SSH_HOST }}
+
+      - name: Checkout
+        run: |
+          ssh staging "
+          mkdir -p workspace
+          cd workspace
+          git clone git@github.com:appsttron/rentals-offers-service.git
+          "
+      - name: Docker Deploy
+        run: |
+          ssh staging "
+          echo $NODE_AUTH_TOKEN
+          cd workspace/rentals-offers-service
+          docker build . -t appsttron/rentals-offers-service:prod --build-arg NODE_AUTH_TOKEN=${{ secrets.GITHUB_TOKEN }}
+          docker images
+          docker kill rentals-offers-service
+          docker rm rentals-offers-service
+          docker run --name rentals-offers-service -p 9070:3000 -e DATABASE_URL=${{ secrets.DATABASE_URL }} -e API_KEY=${{ secrets.API_KEY }} -d -t appsttron/rentals-offers-service:prod
+          "
+
+      - name: Clean up
+        if: always()
+        run: |
+          ssh staging "
+          ls
+          rm -r workspace/rentals-offers-service
+          "
