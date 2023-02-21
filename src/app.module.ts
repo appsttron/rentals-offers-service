@@ -1,10 +1,10 @@
 import { Module, NestModule, MiddlewareConsumer } from '@nestjs/common';
-import { ConfigsModule } from './configs/configs.module';
 import { EnvironmentConfigModule } from './environment-config/environment-config.module';
 import { SecurityMiddleware } from './security-config/security.middleware';
+import { RentalEntitiesModule } from './rental-entities/rental-entities.module';
 
 @Module({
-  imports: [EnvironmentConfigModule, ConfigsModule],
+  imports: [EnvironmentConfigModule, RentalEntitiesModule],
   controllers: [],
   providers: [],
 })
