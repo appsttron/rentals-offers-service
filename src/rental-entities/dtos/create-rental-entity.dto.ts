@@ -7,6 +7,7 @@ export class CreateRentalEntityDto {
   date_entered: Date;
   date_issued: Date;
   expiration_date: Date;
+  permit_status: string;
   address: string;
   city: string;
   state: string;

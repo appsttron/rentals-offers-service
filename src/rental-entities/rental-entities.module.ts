@@ -5,9 +5,10 @@ import { RentalEntitiesMongoRepository } from './rental-entities.mongo.repositor
 import { rentalEntitiesProviders } from './rental-entities.provider';
 import { DatabaseModule } from '../db-config/database.module';
 import { Module } from '@nestjs/common';
+import { HttpModule } from '@nestjs/axios';
 
 @Module({
-  imports: [DatabaseModule],
+  imports: [DatabaseModule, HttpModule],
   controllers: [RentalEntitiesController],
   providers: [
     RentalEntitiesService,

@@ -4,13 +4,28 @@ import { RentalEntityDocument } from './rental-entities.schema';
 import { UpdateRentalEntityStatusDto } from './dtos/update-rental-entity-status.dto';
 import { RentalEntitiesDtoMapper } from './rental-entities.dto.mapper';
 import { RentalEntitiesMongoRepository } from './rental-entities.mongo.repository';
+import { HttpService } from '@nestjs/axios';
+import {create} from "domain";
 
 @Injectable()
 export class RentalEntitiesService {
   constructor(
+    private readonly httpService: HttpService,
     private readonly rentalEntitiesRepository: RentalEntitiesMongoRepository,
     private readonly rentalEntitiesDtoMapper: RentalEntitiesDtoMapper
   ) {}
+
+  async read(): Promise<any> {
+    return new Promise( resolve =>
+      this.httpService
+          .get('https://data.nashville.gov/resource/2z82-v8pm.json').subscribe(r => {
+            // r.data.map(record => {
+            //   this.create(record);
+            // })
+            resolve(r.data);
+      })
+    );
+  }
 
   async create(
     createRentalEntityDto: CreateRentalEntityDto

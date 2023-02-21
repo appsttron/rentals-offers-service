@@ -21,6 +21,9 @@ export class RentalEntity {
   permit_subtype_description: string;
 
   @Prop()
+  permit_status: string;
+
+  @Prop()
   parcel: string;
 
   @Prop()

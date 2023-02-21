@@ -17,10 +17,8 @@ export class RentalEntitiesController {
   constructor(private readonly rentalEntityService: RentalEntitiesService) {}
 
   @Get('/read')
-  async read() {
-    return fetch('https://data.nashville.gov/resource/2z82-v8pm.json').then(
-      (res) => console.log(res.body)
-    );
+  async read(): Promise<any> {
+    return this.rentalEntityService.read();
   }
 
   @Post()
