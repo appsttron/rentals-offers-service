@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import {MockDataController} from "./mock-data.controller";
+import { MockDataController } from './mock-data.controller';
 
 @Module({
   imports: [],

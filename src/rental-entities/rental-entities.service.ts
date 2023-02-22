@@ -1,11 +1,11 @@
-import {HttpException, HttpStatus, Inject, Injectable} from '@nestjs/common';
+import { HttpException, HttpStatus, Inject, Injectable } from '@nestjs/common';
 import { CreateRentalEntityDto } from './dtos/create-rental-entity.dto';
 import { RentalEntityDocument } from './rental-entities.schema';
 import { UpdateRentalEntityStatusDto } from './dtos/update-rental-entity-status.dto';
 import { RentalEntitiesDtoMapper } from './rental-entities.dto.mapper';
 import { RentalEntitiesMongoRepository } from './rental-entities.mongo.repository';
 import { HttpService } from '@nestjs/axios';
-import {ClientProxy} from "@nestjs/microservices";
+import { ClientProxy } from '@nestjs/microservices';
 
 @Injectable()
 export class RentalEntitiesService {
@@ -14,15 +14,21 @@ export class RentalEntitiesService {
     private readonly rentalEntitiesRepository: RentalEntitiesMongoRepository,
     private readonly rentalEntitiesDtoMapper: RentalEntitiesDtoMapper,
     @Inject('RENTALS_QUEUE')
-    private readonly rentalsQueue: ClientProxy,
+    private readonly rentalsQueue: ClientProxy
   ) {}
 
   async read(url: string): Promise<any> {
-    this.rentalsQueue.send('SyncCommand', JSON.stringify({url: url})).subscribe();
+    this.rentalsQueue
+      .send('SyncCommand', JSON.stringify({ url: url }))
+      .subscribe();
   }
 
-  async queueRentalEntity(createRentalEntityDto: CreateRentalEntityDto): Promise<any> {
-    this.rentalsQueue.send('CreateRentalEntityDto', JSON.stringify(createRentalEntityDto)).subscribe();
+  async queueRentalEntity(
+    createRentalEntityDto: CreateRentalEntityDto
+  ): Promise<any> {
+    this.rentalsQueue
+      .send('CreateRentalEntityDto', JSON.stringify(createRentalEntityDto))
+      .subscribe();
   }
 
   async create(

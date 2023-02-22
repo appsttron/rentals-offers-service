@@ -17,12 +17,14 @@ export class RentalEntitiesController {
   constructor(private readonly rentalEntityService: RentalEntitiesService) {}
 
   @Post('/read')
-  async read(@Body() payload: {url: string}): Promise<any> {
+  async read(@Body() payload: { url: string }): Promise<any> {
     return this.rentalEntityService.read(payload.url);
   }
 
   @Post('/queue')
-  async queueRentalEntity(@Body() createRentalEntityDto: CreateRentalEntityDto): Promise<any> {
+  async queueRentalEntity(
+    @Body() createRentalEntityDto: CreateRentalEntityDto
+  ): Promise<any> {
     return this.rentalEntityService.queueRentalEntity(createRentalEntityDto);
   }
 
@@ -34,7 +36,9 @@ export class RentalEntitiesController {
   }
 
   @Get(':permit')
-  async findByName(@Param('permit') permit: string): Promise<RentalEntityDocument> {
+  async findByName(
+    @Param('permit') permit: string
+  ): Promise<RentalEntityDocument> {
     return this.rentalEntityService.findByPermit(permit);
   }
 
