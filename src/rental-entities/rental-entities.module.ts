@@ -9,11 +9,10 @@ import { HttpModule } from '@nestjs/axios';
 import {rentalsQueueProvider} from "./rentals.queue.provider";
 import {ClientProxy} from "@nestjs/microservices";
 import {EnvironmentConfigModule} from "../environment-config/environment-config.module";
-import {RentalEntitiesQueueController} from "./rental-entities.queue.controller";
 
 @Module({
   imports: [DatabaseModule, HttpModule, EnvironmentConfigModule],
-  controllers: [RentalEntitiesController, RentalEntitiesQueueController],
+  controllers: [RentalEntitiesController],
   providers: [
     RentalEntitiesService,
     RentalEntitiesDtoMapper,

@@ -17,29 +17,12 @@ export class RentalEntitiesService {
     private readonly rentalsQueue: ClientProxy,
   ) {}
 
-  async processRentalEntity(createRentalEntityDto: CreateRentalEntityDto): Promise<any> {
-    return new Promise( async () => {
-      let existing = await this.findByPermit(createRentalEntityDto.permit);
-      if (existing) {
-        if (existing.permit_status !== createRentalEntityDto.permit_status) {
-          await this.updateStatus({permit: createRentalEntityDto.permit, status: createRentalEntityDto.permit_status});
-        }
-      } else {
-        await this.create(createRentalEntityDto);
-      }
-    });
+  async read(url: string): Promise<any> {
+    this.rentalsQueue.send('SyncCommand', JSON.stringify({url: url})).subscribe();
   }
 
-  async read(): Promise<any> {
-    return new Promise( resolve =>
-      this.httpService
-          .get('http://206.189.197.77:9070/mock-data/pre').subscribe(async r => {
-            await r.data.map(async (record:CreateRentalEntityDto) => {
-              await this.rentalsQueue.send({typeID:'CreateRentalEntityDto'}, JSON.stringify(record)).subscribe();
-            });
-            resolve(r.data);
-      })
-    );
+  async queueRentalEntity(createRentalEntityDto: CreateRentalEntityDto): Promise<any> {
+    this.rentalsQueue.send('CreateRentalEntityDto', JSON.stringify(createRentalEntityDto)).subscribe();
   }
 
   async create(

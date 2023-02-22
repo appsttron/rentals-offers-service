@@ -16,9 +16,14 @@ import { UpdateRentalEntityStatusDto } from './dtos/update-rental-entity-status.
 export class RentalEntitiesController {
   constructor(private readonly rentalEntityService: RentalEntitiesService) {}
 
-  @Get('/read')
-  async read(): Promise<any> {
-    return this.rentalEntityService.read();
+  @Post('/read')
+  async read(@Body() payload: {url: string}): Promise<any> {
+    return this.rentalEntityService.read(payload.url);
+  }
+
+  @Post('/queue')
+  async queueRentalEntity(@Body() createRentalEntityDto: CreateRentalEntityDto): Promise<any> {
+    return this.rentalEntityService.queueRentalEntity(createRentalEntityDto);
   }
 
   @Post()
