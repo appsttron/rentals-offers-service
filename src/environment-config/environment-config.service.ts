@@ -13,4 +13,12 @@ export class EnvironmentConfigService implements DatabaseConfig {
   getApiKey(): string {
     return this.configService.get<string>('API_KEY');
   }
+
+  getRMQUrl(): string {
+    return this.configService.get<string>('RMQ_URL');
+  }
+
+  getRMQQueueName(): string {
+    return this.configService.get<string>('RMQ_QUEUE_NAME');
+  }
 }

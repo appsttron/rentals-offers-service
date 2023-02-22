@@ -47,7 +47,7 @@ jobs:
           docker images
           docker kill rentals-offers-service
           docker rm rentals-offers-service
-          docker run --name rentals-offers-service -p 9070:3000 -e DATABASE_URL=${{ secrets.DATABASE_URL }} -e API_KEY=${{ secrets.API_KEY }} -d -t appsttron/rentals-offers-service:prod
+          docker run --name rentals-offers-service -p 9070:3000 -e DATABASE_URL=${{ secrets.DATABASE_URL }} -e API_KEY=${{ secrets.API_KEY }} -e RMQ_QUEUE_NAME=rentals -e RMQ_URL=${{ secrets.RMQ_URL }} -d -t appsttron/rentals-offers-service:prod
           "
 
       - name: Clean up

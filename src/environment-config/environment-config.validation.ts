@@ -7,6 +7,12 @@ class EnvironmentVariables {
 
   @IsString()
   API_KEY: string;
+
+  @IsString()
+  RMQ_URL: string;
+
+  @IsString()
+  RMQ_QUEUE_NAME: string;
 }
 
 export function validate(config: Record<string, unknown>) {
